@@ -8,6 +8,8 @@ const { helloJs, jsTask } = require("./js-task");
 
 const { cacheBusting, cacheBustTask } = require("./cache-bust-task");
 
+const { browserSyncTask } = require("./browser-sync-task");
+
 //  File path variables
 const files = { 
 	sassPath: 'src/scss/**/*.scss',
@@ -28,6 +30,6 @@ exports.default = series(
   parallel(helloJs, helloSass, cacheBusting)
 );
 	
-
+exports.build = browserSyncTask;
 
 
