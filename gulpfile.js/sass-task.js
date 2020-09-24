@@ -5,6 +5,7 @@ const sourcemaps    = require('gulp-sourcemaps');
 const sass          = require('gulp-sass');
 const autoprefixer  = require('autoprefixer');
 const cssnano       = require('cssnano');
+const browserSync   = require("browser-sync").create();
 
 // Testing exported file is working
 function helloSass() {
@@ -23,10 +24,11 @@ function sassTask() {
 	
 	return src(files.sassPath)
 		.pipe(sourcemaps.init())
-		.pipe(sass())
+		.pipe(sass().on('error', sass.logError))
 		.pipe(postcss(plugins))
 		.pipe(sourcemaps.write('.'))
-		.pipe(dest('dist'));
+		.pipe(dest('dist'))
+		.pipe(browserSync.stream());
 }
 
 exports.helloSass = helloSass;

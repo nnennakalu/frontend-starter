@@ -1,5 +1,6 @@
 // Initialize modules
-const { src, dest, watch, series, parallel } = require("gulp");
+const { watch, series, parallel } = require("gulp");
+const browserSync = require("browser-sync");
 
 // Import files
 const { helloSass, sassTask } = require("./sass-task");
@@ -8,18 +9,24 @@ const { helloJs, jsTask } = require("./js-task");
 
 const { cacheBusting, cacheBustTask } = require("./cache-bust-task");
 
-const { browserSyncTask } = require("./browser-sync-task");
-
 //  File path variables
-const files = { 
-	sassPath: 'src/scss/**/*.scss',
-	jsPath  : 'src/js/**/*.js'
+const files = {
+  sassPath: "src/scss/**/*.scss",
+  jsPath: "src/js/**/*.js",
+  htmlPath: "src/*.html",
 };
 
 // Watch task
 function watchTask() {
-	watch([ files.sassPath, files.jsPath ],
-		parallel(sassTask, jsTask));
+  browserSync.init({
+    server: {
+      baseDir: "../",
+    },
+  });
+
+  watch([files.sassPath, files.jsPath], parallel(sassTask, jsTask));
+
+  watch(files.htmlPath).on("change", browserSync.reload);
 }
 
 // Default task
@@ -29,7 +36,5 @@ exports.default = series(
   watchTask,
   parallel(helloJs, helloSass, cacheBusting)
 );
-	
-exports.build = browserSyncTask;
 
-
+exports.watch = watchTask;
