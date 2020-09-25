@@ -2,13 +2,13 @@
 const { watch, series, parallel } = require("gulp");
 
 // Import files
-const { helloSass, sassTask } = require("./sass-task");
+const { sassTask } = require("./sass-task");
 
-const { helloJs, jsTask } = require("./js-task");
+const { jsTask } = require("./js-task");
 
-const { cacheBusting, cacheBustTask } = require("./cache-bust-task");
+const { cacheBustTask } = require("./cache-bust-task");
 
-const { browserSyncTask } = require("./browser-sync-task");
+const { browserSyncTask, cssTask } = require("./browser-sync-task");
 
 //  File path variables
 const files = {
@@ -24,15 +24,10 @@ function watchTask() {
 
 // Default task
 exports.default = parallel(
-  browserSyncTask,
-  series(
-    parallel(sassTask, jsTask),
-    cacheBustTask,
-    watchTask,
-    parallel(helloJs, helloSass, cacheBusting)
-  )
+  parallel(cssTask, browserSyncTask),
+  series(parallel(sassTask, jsTask), cacheBustTask, watchTask)
 );
 
-exports.build = browserSyncTask;
+
 
 

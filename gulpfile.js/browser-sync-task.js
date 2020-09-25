@@ -13,11 +13,11 @@ const files = {
 };
 
 // Sass Task
-function sassTask() {
+function cssTask() {
 	console.log('sass task working');
 	return src(files.sassPath)	
     .pipe(sass().on("error", sass.logError))
-    .pipe(dest('src/css/git'))
+    .pipe(dest('src/css'))
     .pipe(browserSync.stream());
 }
 
@@ -28,11 +28,11 @@ function browserSyncTask() {
     },
   });
 
-  watch([files.sassPath], sassTask);
+  watch([files.sassPath], cssTask);
   watch([files.jsPath]).on("change", browserSync.reload);
   watch([files.htmlPath]).on("change", browserSync.reload);
 }
 
 exports.browserSyncTask = browserSyncTask;
 
-exports.cssTask = sassTask;
+exports.cssTask = cssTask;
