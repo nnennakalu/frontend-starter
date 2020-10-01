@@ -8,7 +8,7 @@ const { jsTask } = require("./js-task");
 
 const { cacheBustTask } = require("./cache-bust-task");
 
-const { browserSyncTask, cssTask } = require("./browser-sync-task");
+const { browserSyncTask } = require("./browser-sync-task");
 
 //  File path variables
 const files = {
@@ -24,9 +24,12 @@ function watchTask() {
 
 // Default task
 exports.default = parallel(
-  parallel(cssTask, browserSyncTask),
-  series(parallel(sassTask, jsTask), cacheBustTask, watchTask)
-);
+	browserSyncTask,
+	series(
+		parallel(sassTask, jsTask), 
+		cacheBustTask, 
+		watchTask
+	));
 
 
 

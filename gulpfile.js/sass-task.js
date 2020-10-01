@@ -6,11 +6,6 @@ const sass          = require('gulp-sass');
 const autoprefixer  = require('autoprefixer');
 const cssnano       = require('cssnano');
 
-// Testing exported file is working
-function helloSass() {
-	console.log("Hello I am from sass-task");
-}
-
 //  File path variables
 const files = { sassPath: 'src/scss/**/*.scss' };
 
@@ -28,7 +23,5 @@ function sassTask() {
 		.pipe(sourcemaps.write('.'))
 		.pipe(dest('dist'));
 }
-
-exports.helloSass = helloSass;
 
 exports.sassTask  = sassTask;

@@ -1,5 +1,5 @@
 // Initialize modules
-const { src, dest, watch } = require("gulp");
+const { src, dest, watch, parallel } = require("gulp");
 
 const sass = require("gulp-sass");
 
@@ -14,7 +14,6 @@ const files = {
 
 // Sass Task
 function cssTask() {
-	console.log('sass task working');
 	return src(files.sassPath)	
     .pipe(sass().on("error", sass.logError))
     .pipe(dest('src/css'))
@@ -33,6 +32,4 @@ function browserSyncTask() {
   watch([files.htmlPath]).on("change", browserSync.reload);
 }
 
-exports.browserSyncTask = browserSyncTask;
-
-exports.cssTask = cssTask;
+exports.browserSyncTask = parallel(cssTask, browserSyncTask);
