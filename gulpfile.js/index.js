@@ -13,8 +13,7 @@ const { browserSyncTask } = require("./browser-sync-task");
 //  File path variables
 const files = {
   sassPath: "src/scss/**/*.scss",
-  jsPath: "src/js/**/*.js",
-  htmlPath: "src/*.html",
+  jsPath: "src/js/**/*.js"
 };
 
 // Watch task

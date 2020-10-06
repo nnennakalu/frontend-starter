@@ -8,7 +8,6 @@ const files = { jsPath: 'src/js/**/*.js' };
 
 // js task
 function jsTask() {
-  console.log('jsTask is working');
   return src(files.jsPath)
     .pipe(concat("main.js"))
     .pipe(uglify())
